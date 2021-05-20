@@ -1,7 +1,19 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
+const chalk = require('chalk');
 const utils = require("./utils/utils.js");
+
+function validateInput(input) {
+    if (this.disableValidation) {
+        return true;
+    }
+    if (input === "") {
+        console.log(chalk.red(`Please enter ${this.name}`));
+        return false;
+    }
+    return true;
+}
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -49,10 +61,12 @@ const questions = [
         type: "list",
         message: "Choose a license",
         name: "license",
-        choices: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "None"]
+        choices: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "None"],
+        disableValidation: true,
     }
 ];
 
+questions.forEach(el => el.validate = validateInput.bind(el))
 
 // TODO: Create a function to write README file
 
@@ -68,11 +82,8 @@ function writeToFile(fileName, data) {
 function init() {
     inquirer.
         prompt(questions)
-
         .then((answers) => writeToFile("README_TEST.md", utils.generateMarkdown(answers))
-
         )
-        // .then((data) => writeToFile("README_test.md", data))
         .catch(err => console.log(err))
 };
 
