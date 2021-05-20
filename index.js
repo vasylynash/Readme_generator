@@ -5,12 +5,16 @@ const chalk = require('chalk');
 const utils = require("./utils/utils.js");
 
 function validateInput(input) {
-    if (this.disableValidation) {
-        return true;
-    }
     if (input === "") {
         console.log(chalk.red(`Please enter ${this.name}`));
         return false;
+    }
+    if (this.emailValidation) {
+        const isValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/.test(input);
+        if (!isValid) {
+            console.log(chalk.red(" Please enter a valid email"));
+        }
+        return isValid;
     }
     return true;
 }
@@ -26,6 +30,7 @@ const questions = [
         type: "input",
         message: "Enter your email",
         name: "email",
+        emailValidation: true,
     },
     {
         type: "input",
@@ -62,16 +67,12 @@ const questions = [
         message: "Choose a license",
         name: "license",
         choices: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "None"],
-        disableValidation: true,
     }
 ];
 
 questions.forEach(el => el.validate = validateInput.bind(el))
 
 // TODO: Create a function to write README file
-
-
-
 function writeToFile(fileName, data) {
     return fs.writeFile(fileName, data, err =>
         err ? console.log(err) : "File created!")
