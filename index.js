@@ -1,4 +1,3 @@
-// TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
 const chalk = require('chalk');
@@ -19,7 +18,6 @@ function validateInput(input) {
     return true;
 }
 
-// TODO: Create an array of questions for user input
 const questions = [
     {
         type: "input",
@@ -72,22 +70,19 @@ const questions = [
 
 questions.forEach(el => el.validate = validateInput.bind(el))
 
-// TODO: Create a function to write README file
 function writeToFile(fileName, data) {
     return fs.writeFile(fileName, data, err =>
         err ? console.log(err) : "File created!")
 
 }
 
-// TODO: Create a function to initialize app
 function init() {
     inquirer.
         prompt(questions)
-        .then((answers) => writeToFile("README_TEST.md", utils.generateMarkdown(answers))
+        .then((answers) => writeToFile("README.md", utils.generateMarkdown(answers))
         )
         .catch(err => console.log(err))
 };
 
-// Function call to initialize app
 init();
 
