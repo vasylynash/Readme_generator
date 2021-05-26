@@ -2,7 +2,7 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
   ## Description
-  This is a simple Node app to generate README file for the project.
+  This is a simple CLI tool to generate README file for the project.
 
   ## Table of Contents
   [Installation](#installation)  
